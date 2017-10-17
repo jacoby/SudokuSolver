@@ -2,10 +2,7 @@
 
 use strict ;
 use warnings ;
-use utf8 ;
-binmode STDOUT, ':utf8' ;
-use feature qw{ postderef say signatures state } ;
-no warnings qw{ experimental::postderef experimental::signatures } ;
+use feature qw{ say } ;
 use subs qw{ solve_sudoku test_solution display_puzzle no_go_list } ;
 
 my @array ;
@@ -85,7 +82,6 @@ sub solve_sudoku {
     else { # current possition is empty ;
         for my $v ( 1 .. 9 ) {
             $tmp_array[$x][$y] = $v ;
-#            next if grep m{$v} , @no_go ;
             solve_sudoku( $nx , $ny , $history . ' ' . $x . $y . $v ) ;
             }
         }
@@ -274,62 +270,6 @@ sub display_puzzle {
     }
 #-------------------------------------------------------------------------------
 
-
-##-------------------------------------------------------------------------------
-#sub solve_sudoku_junk {
-#    my $test = shift ;
-#    my @tmp_array ;
-#
-#    for my $a ( 0 .. 9 ) {
-#        for my $b ( 0 .. 9 ) {
-#            $tmp_array[$a][$b] = $array[$a][$b] ;
-#            }
-#        }
-#
-#    # MAKE TEMP ARRAY
-#    for my $tmp ( split m{\s}mx , $test ) {
-#        if ( $tmp =~ /\d\d\d/ ) {
-#            my ( $xx , $yy , $vv ) ;
-#            $tmp =~ m{(\d)(\d)(\d)}mx ;
-#            $xx = $1 ; $yy = $2 ; $vv = $3 ;
-#            my $v = $tmp_array[$xx][$yy] =~ m{\d}mx ;
-#            if ( $tmp_array[$xx][$yy] =~ m{\d}mx ) {
-#                $debug and say '            FAIL EXISTS ' . $xx . $yy . $v ;
-#                return 0 ;
-#                }
-#            $tmp_array[$xx][$yy] = $vv ;
-#            }
-#        }
-#
-#    $debug and say 'TESTING: ' . $test ;
-#    my @scal = split m{\s}mx , $test ;
-#    my $scal = scalar @scal ;
-#    my $test_sol = test_solution( \@tmp_array ) ;
-#    $outcount++ ;
-#    if ( $outcount % 10000 == 0 ) {
-#        display_puzzle \@tmp_array if $outcount % 1000 == 0 ;
-#        say join '#' , $scal , $test_sol , $outcount ;
-#        }
-#    if ( $test_sol == 0 ) {##fail
-#        $debug and say 'FAIL' ;
-#        return ;
-#        }
-#    for my $x ( 0 .. 8 ) {
-#        for my $y ( 0 .. 8 ) {
-#            if ( $tmp_array[$x][$y] !~ m{\d}mx ) {
-#                for my $v ( 1 .. 9 ) {
-#                    my $new_test = join '' , $test , ' ' , $x , $y , $v  ;
-#                    next if $tmp_array[$x][$y] =~ m{\d}mx ;
-#                    $debug and say '    NEW TEST: ' . $new_test ;
-#                    solve_sudoku $new_test ;
-#                    }
-#                }
-#            }
-#        }
-#
-#    return 0 ;
-#    }
-##-------------------------------------------------------------------------------
 
 exit 0 ;
 #===============================================================================
